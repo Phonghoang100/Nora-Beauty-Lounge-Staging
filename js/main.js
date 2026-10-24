@@ -80,6 +80,17 @@
     revealed.forEach(function (el) { el.classList.add("in-view"); });
   }
 
+  /* Support subfolder hosting (e.g. GitHub Pages staging environments) */
+  var subfolder = "/Nora-Beauty-Lounge-Staging";
+  if (location.pathname.startsWith(subfolder)) {
+    document.querySelectorAll("a[href^='/']").forEach(function (a) {
+      var href = a.getAttribute("href");
+      if (!href.startsWith(subfolder) && !href.startsWith("//")) {
+        a.setAttribute("href", subfolder + (href === "/" ? "/" : href));
+      }
+    });
+  }
+
   /* Mark current nav item */
   var here = location.pathname.replace(/\/index\.html$/, "/").replace(/\.html$/, "");
   document.querySelectorAll(".nav-list a, .nav-drawer a").forEach(function (a) {
